@@ -16,7 +16,8 @@ import {
     Settings,
     X,
     FileText,
-    Bus
+    Bus,
+    FileCheck
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -27,6 +28,7 @@ const adminNavItems = [
     { title: "Attendance", href: "/admin/attendance", icon: CalendarCheck },
     { title: "Timetable", href: "/admin/timetable", icon: Clock },
     { title: "Exams & Marks", href: "/admin/exams", icon: BookOpen },
+    { title: "Leave Management", href: "/admin/leave", icon: FileCheck },
     { title: "Fee Management", href: "/admin/fees", icon: CreditCard },
     { title: "Transportation", href: "/admin/transportation", icon: Bus },
     { title: "Library", href: "/admin/library", icon: Library },
@@ -40,6 +42,7 @@ const teacherNavItems = [
     { title: "Mark Attendance", href: "/teacher/attendance", icon: CalendarCheck },
     { title: "My Timetable", href: "/teacher/timetable", icon: Clock },
     { title: "Exams & Marks", href: "/teacher/exams", icon: BookOpen },
+    { title: "Apply for Leave", href: "/teacher/leave", icon: FileCheck },
     { title: "Transportation", href: "/teacher/transportation", icon: Bus },
     { title: "Performance", href: "/teacher/reports", icon: BarChart3 },
     { title: "My Library", href: "/teacher/library", icon: Library },
@@ -63,6 +66,7 @@ const studentNavItems = [
     { title: "My Attendance", href: "/student/attendance", icon: CalendarCheck },
     { title: "My Timetable", href: "/student/timetable", icon: Clock },
     { title: "Exam Results", href: "/student/exams", icon: BookOpen },
+    { title: "Apply for Leave", href: "/student/leave", icon: FileCheck },
     { title: "Fee Status", href: "/student/fees", icon: CreditCard },
     { title: "Transportation", href: "/student/transportation", icon: Bus },
     { title: "Library", href: "/student/library", icon: Library },
