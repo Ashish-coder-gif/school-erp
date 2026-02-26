@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Bell, Plus, Users, GraduationCap, X } from "lucide-react";
+import { toast } from "sonner";
 
 // Mock Data
 const announcementsData = [
@@ -12,10 +13,14 @@ const announcementsData = [
 ];
 
 export default function AnnouncementsPage() {
+    const [announcements, setAnnouncements] = useState(announcementsData);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [targetFilter, setTargetFilter] = useState("All");
+    const [formTitle, setFormTitle] = useState("");
+    const [formContent, setFormContent] = useState("");
+    const [formTarget, setFormTarget] = useState("All");
 
-    const filteredAnnouncements = announcementsData.filter(
+    const filteredAnnouncements = announcements.filter(
         (item) => targetFilter === "All" || item.target === targetFilter
     );
 
@@ -118,45 +123,32 @@ export default function AnnouncementsPage() {
                             </button>
                         </div>
 
-                        <form className="p-6 space-y-5" onSubmit={(e) => { e.preventDefault(); setIsModalOpen(false); }}>
+                        <form id="announcement-form" className="p-6 space-y-5" onSubmit={(e) => {
+                            e.preventDefault();
+                            const newAnnouncement = { id: announcements.length + 1, title: formTitle, content: formContent, target: formTarget, date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }), author: "Admin" };
+                            setAnnouncements(prev => [newAnnouncement, ...prev]);
+                            setFormTitle(""); setFormContent(""); setFormTarget("All");
+                            setIsModalOpen(false);
+                            toast.success("Announcement published successfully");
+                        }}>
                             <div>
                                 <label className="block text-sm font-medium text-slate-700 mb-1">Notice Title</label>
-                                <input
-                                    type="text"
-                                    required
-                                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all text-sm"
-                                    placeholder="E.g., Holiday on Monday"
-                                />
+                                <input type="text" required value={formTitle} onChange={e => setFormTitle(e.target.value)} className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all text-sm" placeholder="E.g., Holiday on Monday" />
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-slate-700 mb-1">Target Audience</label>
                                 <div className="grid grid-cols-2 gap-3 mt-2">
-                                    <label className="flex items-center gap-2 p-3 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50 [&:has(:checked)]:border-amber-500 [&:has(:checked)]:bg-amber-50">
-                                        <input type="radio" name="target" defaultChecked className="text-amber-500 focus:ring-amber-500" />
-                                        <span className="text-sm font-medium text-slate-700">All (School-wide)</span>
-                                    </label>
-                                    <label className="flex items-center gap-2 p-3 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50 [&:has(:checked)]:border-amber-500 [&:has(:checked)]:bg-amber-50">
-                                        <input type="radio" name="target" className="text-emerald-500 focus:ring-emerald-500" />
-                                        <span className="text-sm font-medium text-slate-700">Students</span>
-                                    </label>
-                                    <label className="flex items-center gap-2 p-3 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50 [&:has(:checked)]:border-amber-500 [&:has(:checked)]:bg-amber-50">
-                                        <input type="radio" name="target" className="text-blue-500 focus:ring-blue-500" />
-                                        <span className="text-sm font-medium text-slate-700">Teachers</span>
-                                    </label>
-                                    <label className="flex items-center gap-2 p-3 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50 [&:has(:checked)]:border-amber-500 [&:has(:checked)]:bg-amber-50">
-                                        <input type="radio" name="target" className="text-purple-500 focus:ring-purple-500" />
-                                        <span className="text-sm font-medium text-slate-700">Parents</span>
-                                    </label>
+                                    {["All", "Students", "Teachers", "Parents"].map(t => (
+                                        <label key={t} className={`flex items-center gap-2 p-3 border rounded-lg cursor-pointer hover:bg-slate-50 ${formTarget === t ? 'border-amber-500 bg-amber-50' : 'border-slate-200'}`}>
+                                            <input type="radio" name="target" checked={formTarget === t} onChange={() => setFormTarget(t)} className="text-amber-500 focus:ring-amber-500" />
+                                            <span className="text-sm font-medium text-slate-700">{t === 'All' ? 'All (School-wide)' : t}</span>
+                                        </label>
+                                    ))}
                                 </div>
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-slate-700 mb-1">Message Content</label>
-                                <textarea
-                                    rows={5}
-                                    required
-                                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all text-sm resize-none"
-                                    placeholder="Write the full announcement details here..."
-                                ></textarea>
+                                <textarea rows={5} required value={formContent} onChange={e => setFormContent(e.target.value)} className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all text-sm resize-none" placeholder="Write the full announcement details here..."></textarea>
                             </div>
                         </form>
 
@@ -169,7 +161,8 @@ export default function AnnouncementsPage() {
                                 Cancel
                             </button>
                             <button
-                                onClick={() => setIsModalOpen(false)}
+                                type="submit"
+                                form="announcement-form"
                                 className="px-6 py-2 bg-amber-500 text-white rounded-lg text-sm font-medium hover:bg-amber-600 transition-colors shadow-sm"
                             >
                                 Publish Now

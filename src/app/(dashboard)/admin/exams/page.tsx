@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { BookOpen, Search, Download, Plus, ChevronDown, CheckCircle, AlertCircle } from "lucide-react";
+import { BookOpen, Search, Download, Plus, ChevronDown, CheckCircle, AlertCircle, X } from "lucide-react";
 import { toast } from "sonner";
 
 // Mock Data
-const examsData = [
+const initialExams = [
     { id: "EX001", name: "Mid Term Examination", class: "10-A", subject: "Mathematics", date: "2024-10-15", totalMarks: 100 },
     { id: "EX002", name: "Mid Term Examination", class: "10-A", subject: "Science", date: "2024-10-17", totalMarks: 100 },
     { id: "EX003", name: "Unit Test 2", class: "9-B", subject: "English", date: "2024-10-10", totalMarks: 50 },
@@ -31,8 +31,11 @@ const calculateGrade = (marksOut: number, total: number) => {
 };
 
 export default function ExamsPage() {
+    const [exams, setExams] = useState(initialExams);
     const [activeTab, setActiveTab] = useState("exams");
     const [selectedExamId, setSelectedExamId] = useState("EX001");
+    const [showCreateExam, setShowCreateExam] = useState(false);
+    const [examForm, setExamForm] = useState({ name: "", class: "", subject: "", date: "", totalMarks: "" });
     const [marks, setMarks] = useState<Record<string, string>>({
         "STU001": "85",
         "STU002": "92",
@@ -41,7 +44,16 @@ export default function ExamsPage() {
         "STU005": "65",
     });
 
-    const selectedExam = examsData.find(e => e.id === selectedExamId);
+    const selectedExam = exams.find(e => e.id === selectedExamId);
+
+    const handleCreateExam = (e: React.FormEvent) => {
+        e.preventDefault();
+        const newExam = { id: `EX${String(exams.length + 1).padStart(3, "0")}`, name: examForm.name, class: examForm.class, subject: examForm.subject, date: examForm.date, totalMarks: parseInt(examForm.totalMarks) || 100 };
+        setExams(prev => [...prev, newExam]);
+        setExamForm({ name: "", class: "", subject: "", date: "", totalMarks: "" });
+        setShowCreateExam(false);
+        toast.success("Exam created successfully");
+    };
 
     const handleMarkChange = (studentId: string, value: string) => {
         // Only allow numbers
@@ -81,7 +93,7 @@ export default function ExamsPage() {
                             Save Marks
                         </button>
                     )}
-                    <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-sm flex items-center gap-2">
+                    <button onClick={() => { if (activeTab === 'exams') setShowCreateExam(true); }} className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-sm flex items-center gap-2">
                         <Plus className="h-4 w-4" />
                         {activeTab === 'exams' ? 'Create Exam' : 'Add Subject'}
                     </button>
@@ -147,7 +159,7 @@ export default function ExamsPage() {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-100">
-                                {examsData.map((exam) => (
+                                {exams.map((exam) => (
                                     <tr key={exam.id} className="hover:bg-slate-50 transition-colors">
                                         <td className="px-6 py-4">
                                             <div className="font-medium text-slate-800">{exam.name}</div>
@@ -190,7 +202,7 @@ export default function ExamsPage() {
                                     onChange={(e) => setSelectedExamId(e.target.value)}
                                     className="w-full sm:w-80 pl-3 pr-8 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-sm bg-white appearance-none font-medium"
                                 >
-                                    {examsData.map(e => (
+                                    {exams.map(e => (
                                         <option key={e.id} value={e.id}>{e.name} - {e.subject} ({e.class})</option>
                                     ))}
                                 </select>
@@ -271,6 +283,33 @@ export default function ExamsPage() {
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Create Exam Modal */}
+            {showCreateExam && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
+                    <div className="bg-white rounded-xl shadow-xl w-full max-w-md overflow-hidden">
+                        <div className="p-4 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+                            <h2 className="text-lg font-bold text-slate-800">Create New Exam</h2>
+                            <button onClick={() => setShowCreateExam(false)} className="p-1 rounded-md text-slate-400 hover:bg-slate-200 transition-colors"><X className="h-5 w-5" /></button>
+                        </div>
+                        <form onSubmit={handleCreateExam} className="p-6 space-y-4">
+                            <div><label className="block text-sm font-medium text-slate-700 mb-1">Exam Name</label><input type="text" required value={examForm.name} onChange={e => setExamForm(p => ({...p, name: e.target.value}))} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500" placeholder="e.g. Mid Term Examination" /></div>
+                            <div className="grid grid-cols-2 gap-4">
+                                <div><label className="block text-sm font-medium text-slate-700 mb-1">Class</label><input type="text" required value={examForm.class} onChange={e => setExamForm(p => ({...p, class: e.target.value}))} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500" placeholder="e.g. 10-A" /></div>
+                                <div><label className="block text-sm font-medium text-slate-700 mb-1">Subject</label><input type="text" required value={examForm.subject} onChange={e => setExamForm(p => ({...p, subject: e.target.value}))} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500" placeholder="e.g. Mathematics" /></div>
+                            </div>
+                            <div className="grid grid-cols-2 gap-4">
+                                <div><label className="block text-sm font-medium text-slate-700 mb-1">Date</label><input type="date" required value={examForm.date} onChange={e => setExamForm(p => ({...p, date: e.target.value}))} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500" /></div>
+                                <div><label className="block text-sm font-medium text-slate-700 mb-1">Total Marks</label><input type="number" required value={examForm.totalMarks} onChange={e => setExamForm(p => ({...p, totalMarks: e.target.value}))} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500" placeholder="100" /></div>
+                            </div>
+                            <div className="flex justify-end gap-3 pt-2">
+                                <button type="button" onClick={() => setShowCreateExam(false)} className="px-4 py-2 border border-slate-300 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-100">Cancel</button>
+                                <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 shadow-sm">Create Exam</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             )}

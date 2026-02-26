@@ -37,17 +37,31 @@ const teacherNavItems = [
     { title: "My Classes", href: "/teacher/classes", icon: Users },
     { title: "Mark Attendance", href: "/teacher/attendance", icon: CalendarCheck },
     { title: "My Timetable", href: "/teacher/timetable", icon: Clock },
-    { title: "Marks Entry", href: "/teacher/marks", icon: FileText },
-    { title: "Notices", href: "/teacher/notices", icon: Bell },
+    { title: "Exams & Marks", href: "/teacher/exams", icon: BookOpen },
+    { title: "Performance", href: "/teacher/reports", icon: BarChart3 },
+    { title: "My Library", href: "/teacher/library", icon: Library },
+    { title: "Announcements", href: "/teacher/announcements", icon: Bell },
+];
+
+const parentNavItems = [
+    { title: "My Dashboard", href: "/parent", icon: LayoutDashboard },
+    { title: "Children's Attendance", href: "/parent/attendance", icon: CalendarCheck },
+    { title: "Children's Timetable", href: "/parent/timetable", icon: Clock },
+    { title: "Exam Results", href: "/parent/exams", icon: BookOpen },
+    { title: "Fee Status", href: "/parent/fees", icon: CreditCard },
+    { title: "Performance Reports", href: "/parent/reports", icon: BarChart3 },
+    { title: "Library", href: "/parent/library", icon: Library },
+    { title: "Announcements", href: "/parent/announcements", icon: Bell },
 ];
 
 const studentNavItems = [
     { title: "My Dashboard", href: "/student", icon: LayoutDashboard },
     { title: "My Attendance", href: "/student/attendance", icon: CalendarCheck },
-    { title: "Timetable", href: "/student/timetable", icon: Clock },
-    { title: "Exam Results", href: "/student/results", icon: BookOpen },
+    { title: "My Timetable", href: "/student/timetable", icon: Clock },
+    { title: "Exam Results", href: "/student/exams", icon: BookOpen },
     { title: "Fee Status", href: "/student/fees", icon: CreditCard },
-    { title: "Notice Board", href: "/student/notices", icon: Bell },
+    { title: "Library", href: "/student/library", icon: Library },
+    { title: "Announcements", href: "/student/announcements", icon: Bell },
 ];
 
 export default function Sidebar({
@@ -77,6 +91,12 @@ export default function Sidebar({
         themeColor = "bg-purple-600";
         themeHover = "hover:bg-purple-600/10 hover:text-purple-500";
         themeActive = "bg-purple-600 text-white";
+    } else if (pathname?.startsWith("/parent")) {
+        navItems = parentNavItems;
+        rolePrefix = "/parent";
+        themeColor = "bg-amber-600";
+        themeHover = "hover:bg-amber-600/10 hover:text-amber-500";
+        themeActive = "bg-amber-600 text-white";
     }
 
     return (

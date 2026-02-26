@@ -16,25 +16,26 @@ const feesData = [
 ];
 
 export default function FeesPage() {
+    const [fees, setFees] = useState(feesData);
     const [searchTerm, setSearchTerm] = useState("");
     const [filterStatus, setFilterStatus] = useState("All");
 
-    const filteredData = feesData.filter(fee => {
+    const filteredData = fees.filter(fee => {
         const matchesSearch = fee.student.toLowerCase().includes(searchTerm.toLowerCase()) ||
             fee.id.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesStatus = filterStatus === "All" || fee.status === filterStatus;
-
         return matchesSearch && matchesStatus;
     });
 
     const totals = {
-        total: feesData.reduce((acc, curr) => acc + curr.amount, 0),
-        collected: feesData.filter(f => f.status === 'Paid').reduce((acc, curr) => acc + curr.amount, 0),
-        pending: feesData.filter(f => f.status === 'Pending').reduce((acc, curr) => acc + curr.amount, 0),
-        overdue: feesData.filter(f => f.status === 'Overdue').reduce((acc, curr) => acc + curr.amount, 0),
+        total: fees.reduce((acc, curr) => acc + curr.amount, 0),
+        collected: fees.filter(f => f.status === 'Paid').reduce((acc, curr) => acc + curr.amount, 0),
+        pending: fees.filter(f => f.status === 'Pending').reduce((acc, curr) => acc + curr.amount, 0),
+        overdue: fees.filter(f => f.status === 'Overdue').reduce((acc, curr) => acc + curr.amount, 0),
     };
 
     const handleMarkAsPaid = (id: string, name: string) => {
+        setFees(prev => prev.map(f => f.id === id ? { ...f, status: 'Paid' } : f));
         toast.success(`Payment recorded for ${name}`);
     };
 
