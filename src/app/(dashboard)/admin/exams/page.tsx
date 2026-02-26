@@ -1,8 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { BookOpen, Search, Download, Plus, ChevronDown, CheckCircle, AlertCircle, X } from "lucide-react";
+import { BookOpen, Search, Download, Plus, CheckCircle, AlertCircle, X } from "lucide-react";
 import { toast } from "sonner";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 
 // Mock Data
 const initialExams = [
@@ -195,19 +202,19 @@ export default function ExamsPage() {
                 <div className="space-y-6">
                     <div className="bg-white p-5 rounded-xl border border-slate-100 shadow-sm flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center bg-blue-50/50 relative">
                         <div className="flex-1 w-full">
-                            <label className="block text-sm font-semibold text-slate-800 mb-1.5">Select Exam</label>
-                            <div className="relative z-20">
-                                <select
-                                    value={selectedExamId}
-                                    onChange={(e) => setSelectedExamId(e.target.value)}
-                                    className="w-full sm:w-80 pl-3 pr-8 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-sm bg-white appearance-none font-medium text-slate-900 hover:border-slate-400 transition-colors"
-                                >
+                            <label className="block text-sm font-semibold text-slate-800 mb-2">Select Exam</label>
+                            <Select value={selectedExamId} onValueChange={setSelectedExamId}>
+                                <SelectTrigger className="w-full sm:w-96 bg-white text-slate-900 border-slate-300">
+                                    <SelectValue placeholder="Choose an exam..." />
+                                </SelectTrigger>
+                                <SelectContent className="bg-white border-slate-200 z-50">
                                     {exams.map(e => (
-                                        <option key={e.id} value={e.id} className="text-slate-900 bg-white">{e.name} - {e.subject} ({e.class})</option>
+                                        <SelectItem key={e.id} value={e.id} className="text-slate-900 cursor-pointer">
+                                            {e.name} - {e.subject} ({e.class})
+                                        </SelectItem>
                                     ))}
-                                </select>
-                                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-600 pointer-events-none" />
-                            </div>
+                                </SelectContent>
+                            </Select>
                         </div>
 
                         {selectedExam && (
