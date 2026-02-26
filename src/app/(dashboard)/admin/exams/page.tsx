@@ -193,25 +193,25 @@ export default function ExamsPage() {
 
             {activeTab === 'marks' && (
                 <div className="space-y-6">
-                    <div className="bg-white p-5 rounded-xl border border-slate-100 shadow-sm flex flex-col sm:flex-row gap-4 justify-between items-center bg-blue-50/50">
-                        <div className="flex-1">
+                    <div className="bg-white p-5 rounded-xl border border-slate-100 shadow-sm flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center bg-blue-50/50 relative">
+                        <div className="flex-1 w-full">
                             <label className="block text-sm font-semibold text-slate-800 mb-1.5">Select Exam</label>
-                            <div className="relative">
+                            <div className="relative z-20">
                                 <select
                                     value={selectedExamId}
                                     onChange={(e) => setSelectedExamId(e.target.value)}
-                                    className="w-full sm:w-80 pl-3 pr-8 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-sm bg-white appearance-none font-medium text-slate-900"
+                                    className="w-full sm:w-80 pl-3 pr-8 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-sm bg-white appearance-none font-medium text-slate-900 hover:border-slate-400 transition-colors"
                                 >
                                     {exams.map(e => (
-                                        <option key={e.id} value={e.id} className="text-slate-900">{e.name} - {e.subject} ({e.class})</option>
+                                        <option key={e.id} value={e.id} className="text-slate-900 bg-white">{e.name} - {e.subject} ({e.class})</option>
                                     ))}
                                 </select>
-                                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none" />
+                                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-600 pointer-events-none" />
                             </div>
                         </div>
 
                         {selectedExam && (
-                            <div className="flex gap-6 bg-white p-3 rounded-lg border border-slate-200 shadow-sm">
+                            <div className="flex gap-6 bg-white p-3 rounded-lg border border-slate-200 shadow-sm w-full sm:w-auto">
                                 <div>
                                     <p className="text-xs text-slate-600 font-medium uppercase tracking-wider font-semibold">Total Marks</p>
                                     <p className="text-xl font-bold text-slate-900">{selectedExam.totalMarks}</p>
