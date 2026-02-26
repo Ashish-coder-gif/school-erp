@@ -6,8 +6,25 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CheckCircle, AlertCircle, Clock, X } from "lucide-react";
 
+interface Leave {
+    id: string;
+    applicantName: string;
+    applicantType: string;
+    class?: string;
+    subject?: string;
+    coveringTeacher?: string;
+    fromDate: string;
+    toDate: string;
+    days: number;
+    reason: string;
+    leaveType: string;
+    status: string;
+    appliedDate: string;
+    rejectionReason?: string;
+}
+
 export default function AdminLeave() {
-    const [leaves, setLeaves] = useState([
+    const [leaves, setLeaves] = useState<Leave[]>([
         // Student Applications
         {
             id: "APP001",
