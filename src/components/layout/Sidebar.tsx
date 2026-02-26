@@ -29,11 +29,12 @@ const adminNavItems = [
     { title: "Timetable", href: "/admin/timetable", icon: Clock },
     { title: "Exams & Marks", href: "/admin/exams", icon: BookOpen },
     { title: "Leave Management", href: "/admin/leave", icon: FileCheck },
+    { title: "Performance", href: "/admin/performance", icon: BarChart3 },
     { title: "Fee Management", href: "/admin/fees", icon: CreditCard },
     { title: "Transportation", href: "/admin/transportation", icon: Bus },
     { title: "Library", href: "/admin/library", icon: Library },
     { title: "Announcements", href: "/admin/announcements", icon: Bell },
-    { title: "Reports", href: "/admin/reports", icon: BarChart3 },
+    { title: "Reports", href: "/admin/reports", icon: FileText },
 ];
 
 const teacherNavItems = [
@@ -42,9 +43,9 @@ const teacherNavItems = [
     { title: "Mark Attendance", href: "/teacher/attendance", icon: CalendarCheck },
     { title: "My Timetable", href: "/teacher/timetable", icon: Clock },
     { title: "Exams & Marks", href: "/teacher/exams", icon: BookOpen },
+    { title: "Class Performance", href: "/teacher/performance", icon: BarChart3 },
     { title: "Apply for Leave", href: "/teacher/leave", icon: FileCheck },
     { title: "Transportation", href: "/teacher/transportation", icon: Bus },
-    { title: "Performance", href: "/teacher/reports", icon: BarChart3 },
     { title: "My Library", href: "/teacher/library", icon: Library },
     { title: "Announcements", href: "/teacher/announcements", icon: Bell },
 ];
