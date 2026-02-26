@@ -5,6 +5,7 @@ import { Menu, Bell, User, LogOut, Settings as SettingsIcon, ChevronDown } from 
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { ThemeToggle } from "../ThemeToggle";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 export default function Navbar({ toggleSidebar }: { toggleSidebar: () => void }) {
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -61,13 +62,20 @@ export default function Navbar({ toggleSidebar }: { toggleSidebar: () => void })
                         onClick={() => setDropdownOpen(!dropdownOpen)}
                         className="flex items-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-800 p-1.5 rounded-lg transition-colors border border-transparent hover:border-slate-200 dark:hover:border-slate-700"
                     >
-                        <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${role === 'Admin' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-400' :
-                                role === 'Teacher' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-400' :
-                                    role === 'Student' ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/50 dark:text-purple-400' :
-                                        'bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-400'
-                            }`}>
-                            {shortName}
-                        </div>
+                        <Avatar className="h-10 w-10 border-2 border-slate-200 dark:border-slate-700">
+                            <AvatarImage 
+                                src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${role}`}
+                                alt="Ashish Kumar"
+                                className="object-cover"
+                            />
+                            <AvatarFallback className={`font-bold text-sm ${role === 'Admin' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-400' :
+                                    role === 'Teacher' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-400' :
+                                        role === 'Student' ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/50 dark:text-purple-400' :
+                                            'bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-400'
+                                }`}>
+                                AK
+                            </AvatarFallback>
+                        </Avatar>
                         <div className="hidden md:flex flex-col items-start leading-none gap-1">
                             <span className="text-sm font-medium text-slate-700 dark:text-slate-200">Ashish Kumar</span>
                             <span className="text-xs text-slate-500 dark:text-slate-400">{roleLabel}</span>
