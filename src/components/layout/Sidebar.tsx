@@ -15,7 +15,8 @@ import {
     BarChart3,
     Settings,
     X,
-    FileText
+    FileText,
+    Bus
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -27,6 +28,7 @@ const adminNavItems = [
     { title: "Timetable", href: "/admin/timetable", icon: Clock },
     { title: "Exams & Marks", href: "/admin/exams", icon: BookOpen },
     { title: "Fee Management", href: "/admin/fees", icon: CreditCard },
+    { title: "Transportation", href: "/admin/transportation", icon: Bus },
     { title: "Library", href: "/admin/library", icon: Library },
     { title: "Announcements", href: "/admin/announcements", icon: Bell },
     { title: "Reports", href: "/admin/reports", icon: BarChart3 },
@@ -38,6 +40,7 @@ const teacherNavItems = [
     { title: "Mark Attendance", href: "/teacher/attendance", icon: CalendarCheck },
     { title: "My Timetable", href: "/teacher/timetable", icon: Clock },
     { title: "Exams & Marks", href: "/teacher/exams", icon: BookOpen },
+    { title: "Transportation", href: "/teacher/transportation", icon: Bus },
     { title: "Performance", href: "/teacher/reports", icon: BarChart3 },
     { title: "My Library", href: "/teacher/library", icon: Library },
     { title: "Announcements", href: "/teacher/announcements", icon: Bell },
@@ -49,6 +52,7 @@ const parentNavItems = [
     { title: "Children's Timetable", href: "/parent/timetable", icon: Clock },
     { title: "Exam Results", href: "/parent/exams", icon: BookOpen },
     { title: "Fee Status", href: "/parent/fees", icon: CreditCard },
+    { title: "Transportation", href: "/parent/transportation", icon: Bus },
     { title: "Performance Reports", href: "/parent/reports", icon: BarChart3 },
     { title: "Library", href: "/parent/library", icon: Library },
     { title: "Announcements", href: "/parent/announcements", icon: Bell },
@@ -60,6 +64,7 @@ const studentNavItems = [
     { title: "My Timetable", href: "/student/timetable", icon: Clock },
     { title: "Exam Results", href: "/student/exams", icon: BookOpen },
     { title: "Fee Status", href: "/student/fees", icon: CreditCard },
+    { title: "Transportation", href: "/student/transportation", icon: Bus },
     { title: "Library", href: "/student/library", icon: Library },
     { title: "Announcements", href: "/student/announcements", icon: Bell },
 ];
