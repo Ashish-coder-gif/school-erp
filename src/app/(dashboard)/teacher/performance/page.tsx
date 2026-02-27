@@ -181,7 +181,7 @@ export default function TeacherPerformance() {
                                             cx="50%"
                                             cy="50%"
                                             labelLine={false}
-                                            label={({ grade, count }) => `${grade}: ${count}`}
+                                            label={({ grade, count }: any) => `${grade}: ${count}`}
                                             outerRadius={100}
                                             fill="#8884d8"
                                             dataKey="count"
